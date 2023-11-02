@@ -77,33 +77,49 @@ const cookies = {
 
     const atCookie = 'at'
 
-    const at = cookie.includes(atCookie) && this.get(atCookie, cookie)
+    const at = cookie.includes(atCookie) && this.get(atCookie, cookie) || ''
 
-    const decodedAt = JSON.parse(security.base64.decode(at) || '{}')
+    const [, payload] = at.split('.')
 
-    console.log('decodedAt', decodedAt)
+    if (payload) {
+      const response: any = security.base64.decode(payload)
 
-    const theme = cookie.includes('theme') && this.get('theme', cookie)
-    const language = cookie.includes('language') && this.get('language', cookie)
+      if (response?.data) {
+        const user: any = security.base64.decode(response.data)
+        const theme = cookie.includes('theme') && this.get('theme', cookie) || 'light'
+        const language = cookie.includes('language') && this.get('language', cookie)
 
-    const userData: any = {
-      at,
-      isLogged: !!at,
-      preferences: {
-        theme,
-        language,
+        const userData: any = {
+          at,
+          isLogged: !!at,
+          user,
+          preferences: {
+            theme,
+            language,
+          }
+        }
+
+        // if (roles.length > 0) {
+        //   roles.forEach((role: string) => {
+        //     if (user?.role.includes(role)) {
+        //       userData[`is${role.charAt(0).toUpperCase() + role.slice(1)}`] = true;
+        //     }
+        //   });
+        // }
+
+
+        return userData
       }
     }
 
-    // if (roles.length > 0) {
-    //   roles.forEach((role: string) => {
-    //     if (user?.role.includes(role)) {
-    //       userData[`is${role.charAt(0).toUpperCase() + role.slice(1)}`] = true;
-    //     }
-    //   });
-    // }
-
-    return userData
+    return {
+      isLogged: false,
+      user: {},
+      preferences: {
+        theme: 'light',
+        language: 'en'
+      }
+    }
   }
 }
 
