@@ -99,15 +99,6 @@ const cookies = {
           }
         }
 
-        // if (roles.length > 0) {
-        //   roles.forEach((role: string) => {
-        //     if (user?.role.includes(role)) {
-        //       userData[`is${role.charAt(0).toUpperCase() + role.slice(1)}`] = true;
-        //     }
-        //   });
-        // }
-
-
         return userData
       }
     }
