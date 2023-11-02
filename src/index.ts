@@ -79,7 +79,7 @@ const cookies = {
 
     const at = cookie.includes(atCookie) && this.get(atCookie, cookie)
 
-    const decodedAt = security.base64.decode(at)
+    const decodedAt = JSON.parse(security.base64.decode(at) || '{}')
 
     console.log('decodedAt', decodedAt)
 
