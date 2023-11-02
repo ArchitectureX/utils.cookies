@@ -1,3 +1,5 @@
+import security from '@architecturex/utils.security'
+
 const isClient = typeof window !== 'undefined'
 
 const cookies = {
@@ -76,7 +78,11 @@ const cookies = {
     const atCookie = 'at'
 
     const at = cookie.includes(atCookie) && this.get(atCookie, cookie)
-    const user = cookie.includes('user') && this.get('user', cookie)
+
+    const decodedAt = security.base64.decode(at)
+
+    console.log('decodedAt', decodedAt)
+
     const theme = cookie.includes('theme') && this.get('theme', cookie)
     const language = cookie.includes('language') && this.get('language', cookie)
 
