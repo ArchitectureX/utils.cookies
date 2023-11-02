@@ -27,7 +27,7 @@ const cookies = {
     value = '',
     days = 7,
     secure = false,
-    httpOnly = true
+    httpOnly = false
   }: {
     name: string,
     value: string,
