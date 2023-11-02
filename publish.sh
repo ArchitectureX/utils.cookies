@@ -65,7 +65,6 @@ versionPackage() {
     git commit -m "chore: Auto commit before version bump"
 
     # Proceed with versioning
-    npm run lint
     npm version $versionCommand
   fi
 

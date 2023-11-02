@@ -70,7 +70,7 @@ const cookies = {
       days: -1
     });
   },
-  getUserData(cookie = '', roles = []) {
+  getUserData(cookie = '') {
     if (isClient) {
       cookie = document.cookie
     }
