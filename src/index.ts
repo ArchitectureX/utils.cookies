@@ -70,15 +70,7 @@ const cookies = {
       days: -1
     });
   },
-  getUserData(cookie = '') {
-    if (isClient) {
-      cookie = document.cookie
-    }
-
-    const atCookie = 'at'
-
-    const at = cookie.includes(atCookie) && this.get(atCookie, cookie) || ''
-
+  getUserData(at = '') {
     const [, payload] = at.split('.')
 
     if (payload) {
@@ -86,17 +78,11 @@ const cookies = {
 
       if (response?.data) {
         const user: any = security.base64.decode(response.data)
-        const theme = cookie.includes('theme') && this.get('theme', cookie) || 'light'
-        const language = cookie.includes('language') && this.get('language', cookie)
 
         const userData: any = {
           at,
           isLogged: !!at,
-          user,
-          preferences: {
-            theme,
-            language,
-          }
+          user
         }
 
         return userData
@@ -105,11 +91,7 @@ const cookies = {
 
     return {
       isLogged: false,
-      user: {},
-      preferences: {
-        theme: 'light',
-        language: 'en'
-      }
+      user: {}
     }
   }
 }
