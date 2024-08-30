@@ -28,13 +28,15 @@ const cookies = {
     name = '',
     value = '',
     days = 7,
+    expiration = 0,
     secure = false,
     httpOnly = false
   }: {
-    name: string,
-    value: string,
-    days?: number,
-    secure?: boolean,
+    name: string
+    value: string
+    days?: number
+    expiration?: number
+    secure?: boolean
     httpOnly?: boolean
   }) {
     if (!name) {
@@ -49,12 +51,18 @@ const cookies = {
       cookieString += `; expires=${date.toUTCString()}`
     }
 
+    if (expiration > 0) {
+      const date = new Date()
+      date.setTime(expiration)
+      cookieString += `; expires=${date.toUTCString()}`
+    }
+
     if (secure) {
-      cookieString += '; Secure';
+      cookieString += '; Secure'
     }
 
     if (httpOnly) {
-      cookieString += '; HttpOnly';
+      cookieString += '; HttpOnly'
     }
 
     cookieString += '; path=/'
@@ -68,7 +76,7 @@ const cookies = {
       name,
       value: '',
       days: -1
-    });
+    })
   },
   getUserData(at = '') {
     const [, payload] = at.split('.')
